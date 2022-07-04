@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
     ; (async () => {
-        await database.sync(/*{force:true}*/)
+        await database.sync({force:true})
     })()
 
 // routers
