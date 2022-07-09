@@ -1,7 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db');
-const Character = require('./character');
-const CharacterWeapon = require('./characterWeapon');
+const WeaponType = require('./weaponType');
 
 const Weapon = db.define('weapon', {
     name: {
@@ -20,11 +19,11 @@ const Weapon = db.define('weapon', {
     bonus: {
         type: Sequelize.INTEGER,
         allowNull: false
-    },
-    type: {
-        type: Sequelize.STRING,
-        allowNull: false
     }
 })
-Weapon.belongsToMany(Character, { through: CharacterWeapon });
+Weapon.belongsTo(WeaponType, {
+    constraint: true,
+    allowNull: false,
+    foreignKey: 'id'
+})
 module.exports = Weapon

@@ -33,10 +33,10 @@ app.use(function (req, res, next) {
 });
 
 // routers
-const routerUser = require('./routes/userRoutes.js')
-app.use('/users', routerUser)
-const routerAuth = require('./routes/authRoutes.js')
-app.use('/auth', routerAuth)
+app.use('/users', require('./routes/userRoutes.js'))
+app.use('/auth', require('./routes/authRoutes.js'))
+app.use('/character', require('./routes/characterRoutes.js'))
+
 //static Images Folder
 
 app.use('/Images', express.static('./Images'))

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db');
 
-const Equipment = db.define('equipment', {
+const WeaponType = db.define('weaponType', {
     name: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -10,14 +10,6 @@ const Equipment = db.define('equipment', {
     description: {
         type: Sequelize.STRING,
         allowNull: false
-    },
-    weight: {
-        type: Sequelize.DOUBLE,
-        allowNull: false
-    },
-    type: {
-        type: Sequelize.STRING,
-        allowNull: false
     }
 })
-module.exports = Equipment
+module.exports = WeaponType

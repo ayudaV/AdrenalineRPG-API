@@ -1,7 +1,5 @@
 const Sequelize = require('sequelize')
 const db = require('../db');
-const Character = require('./character');
-const CharacterOrganization = require('./characterOrganization');
 
 const Organization = db.define('organization', {
     name: {
@@ -14,6 +12,4 @@ const Organization = db.define('organization', {
         allowNull: false
     }
 })
-Organization.belongsToMany(Character, { through: CharacterOrganization });
-
 module.exports = Organization

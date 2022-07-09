@@ -1,17 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db');
-const CharacterEquipment = require('./characterEquipment');
-const CharacterSkill = require('./characterSkill');
-const CharacterWeapon = require('./characterWeapon');
-const CharacterLanguage = require('./characterLanguage');
-
-const Equipment = require('./equipment');
 const Race = require('./race');
-const Skill = require('./skill');
 const User = require('./user');
-const Weapon = require('./weapon');
-const Organization = require('./organization');
-const Language = require('./language');
 
 const Character = db.define('character', {
     name: {
@@ -123,10 +113,4 @@ Character.belongsTo(User, {
     allowNull: false,
     foreignKey: 'id'
 })
-Character.belongsToMany(Skill, { through: CharacterSkill })
-Character.belongsToMany(Weapon, { through: CharacterWeapon })
-Character.belongsToMany(Equipment, { through: CharacterEquipment })
-Character.belongsToMany(Organization, { through: CharacterEquipment })
-Character.belongsToMany(Language, { through: CharacterLanguage })
-
 module.exports = Character
