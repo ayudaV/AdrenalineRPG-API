@@ -12,7 +12,11 @@ const Weapon = db.define('weapon', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    damege: {
+    image: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    damage: {
         type: Sequelize.STRING,
         allowNull: false
     },
@@ -24,6 +28,6 @@ const Weapon = db.define('weapon', {
 Weapon.belongsTo(WeaponType, {
     constraint: true,
     allowNull: false,
-    foreignKey: 'id'
+    foreignKey: 'idType'
 })
 module.exports = Weapon

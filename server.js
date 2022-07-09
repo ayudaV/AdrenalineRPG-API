@@ -13,19 +13,15 @@ app.use(bodyParser.json())
         await database.sync({ force: true })
     })()
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     // check header or url parameters or post parameters for token
     var token = req.headers['authorization'];
     if (!token) return next(); //if no token, continue
 
     token = token.replace('Bearer ', '');
-    jwt.verify(token, process.env.JWT_SECRET, function (err, user) {
-        if (err) {
-            return res.status(401).json({
-                error: true,
-                message: "Invalid user."
-            });
-        } else {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) return res.status(401).json({ error: true, message: "Invalid user." });
+        else {
             req.user = user; //set the user to req so other routes can use it
             next();
         }
@@ -35,7 +31,8 @@ app.use(function (req, res, next) {
 // routers
 app.use('/users', require('./routes/userRoutes.js'))
 app.use('/auth', require('./routes/authRoutes.js'))
-app.use('/character', require('./routes/characterRoutes.js'))
+app.use('/characters', require('./routes/characterRoutes.js'))
+app.use('/races', require('./routes/raceRoutes.js'))
 
 //static Images Folder
 

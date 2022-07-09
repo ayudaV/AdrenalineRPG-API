@@ -13,7 +13,7 @@ const getUserById = async (req, res) => {
     const user = await User.findByPk(req.params.id, {
         attributes: ['id', 'username', 'firstName', 'lastName', 'email', 'birthday', 'image']
     })
-    res.status(200).send(user)
+    user ? res.status(200).send(user) : res.status(404).json({ success: false, message: 'User not found.' })
 }
 const getUserByNick = async (req, res) => {
     if (!req.user) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
@@ -21,7 +21,7 @@ const getUserByNick = async (req, res) => {
         where: { username: req.params.username },
         attributes: ['id', 'username', 'firstName', 'lastName', 'email', 'birthday', 'image']
     })
-    res.status(200).send(user)
+    user ? res.status(200).send(user) : res.status(404).json({ success: false, message: 'User not found.' })
 }
 const signup = async (req, res) => {
     console.log(req.body);
@@ -36,34 +36,33 @@ const signup = async (req, res) => {
                 email: req.body.email,
                 birthday: req.body.birthday,
                 image: req.file.path
-            }).then(function () {
-                res.sendStatus(201)
-            }).catch(function () {
-                res.sendStatus(406)
             })
+                .then(() => res.sendStatus(201))
+                .catch(() => res.sendStatus(406))
         })
     })
 }
 const putUserById = async (req, res) => {
-    const user = await User.update(req.body, { where: { id: req.params.id } })
-    res.status(200).send(user)
+    if (!req.user) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
+    await User.update(req.body, { where: { id: req.params.id } })
+        .then((user) => { user[0] === 1 ? res.sendStatus(200) : res.status(404).json({ success: false, message: 'User not found.' }) })
 }
 const deleteUserById = async (req, res) => {
-
-    await Product.destroy({ where: { id: req.params.id } })
-    res.status(200).send('User was deleted!')
+    if (!req.user) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
+    await User.destroy({ where: { id: req.params.id } })
+    .then((user) => {user ? res.status(200).send('User was deleted!') : res.status(404).json({ success: false, message: 'User not found.' })}) 
 }
 
-const storage = multer.diskStorage({
+const storageUser = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'Images')
+        cb(null, 'Images/Users')
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname))
+        cb(null, Date.now() + '_' + file.originalname)
     }
 })
-const upload = multer({
-    storage: storage,
+const uploadUser = multer({
+    storage: storageUser,
     limits: { fileSize: '1000000' },
     fileFilter: (req, file, cb) => {
         const fileTypes = /jpeg|jpg|png|gif/
@@ -84,5 +83,5 @@ module.exports = {
     signup,
     putUserById,
     deleteUserById,
-    upload
+    uploadUser
 }

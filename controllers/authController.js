@@ -8,12 +8,12 @@ const signin = async (req, res) => {
         if (user === null) {
             res.status(401).json({ message: "Username or Password is Wrong!" })
         } else {
-            bcrypt.compare(req.body.password, user.password, function (err, result) {
+            bcrypt.compare(req.body.password, user.password, (err, result) => {
                 if (result) {
                     jwt.sign({
                         username: user.username,
                         id: user.id
-                    }, process.env.JWT_SECRET, function (err, token) {
+                    }, process.env.JWT_SECRET, (err, token) => {
                         res.status(200).json({
                             id: user.id,
                             username: user.username,

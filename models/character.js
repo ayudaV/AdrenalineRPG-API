@@ -6,111 +6,103 @@ const User = require('./user');
 const Character = db.define('character', {
     name: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
         unique: true
     },
     description: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
         unique: true
     },
     birthday: {
-        type: Sequelize.DATE,
-        allowNull: false
+        type: Sequelize.DATEONLY,
+        allowNull: true
     },
     height: {
         type: Sequelize.DOUBLE,
-        allowNull: false
+        allowNull: true
     },
     weight: {
         type: Sequelize.DOUBLE,
-        allowNull: false
+        allowNull: true
     },
     eyes: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     skin: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     hair: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     image: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     inspiration: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     proficiency: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     speed: {
         type: Sequelize.INTEGER,
-        allowNull: false
-    },
-    maxHealth: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     health: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     bonusHealth: {
         type: Sequelize.INTEGER,
-        allowNull: false
-    },
-    healthDice: {
-        type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     successes: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     failures: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     strength: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     dexterity: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     constitution: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     intelligence: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     wisdom: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     charisma: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
     },
 })
 Character.belongsTo(Race, {
     constraint: true,
-    allowNull: false,
-    foreignKey: 'id'
+    allowNull: true,
+    foreignKey: 'idRace'
 })
 Character.belongsTo(User, {
     constraint: true,
-    allowNull: false,
-    foreignKey: 'id'
+    allowNull: true,
+    foreignKey: 'idUser'
 })
 module.exports = Character

@@ -11,6 +11,10 @@ const Equipment = db.define('equipment', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    image: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     weight: {
         type: Sequelize.DOUBLE,
         allowNull: false
@@ -18,6 +22,6 @@ const Equipment = db.define('equipment', {
     type: {
         type: Sequelize.STRING,
         allowNull: false
-    }
+    },
 })
 module.exports = Equipment

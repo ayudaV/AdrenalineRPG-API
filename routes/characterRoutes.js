@@ -1,7 +1,7 @@
 const characterController = require('../controllers/characterController.js')
 const router = require('express').Router()
 
-router.post('/',characterController.upload, characterController.insertCharacter)
+router.post('/',characterController.uploadCharacter, characterController.insertCharacter)
 
 router.get('/', characterController.getAllCharacters)
 
