@@ -12,7 +12,6 @@ const Character = db.define('character', {
     description: {
         type: Sequelize.STRING,
         allowNull: true,
-        unique: true
     },
     birthday: {
         type: Sequelize.DATEONLY,
