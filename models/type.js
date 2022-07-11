@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db');
 
-const WeaponType = db.define('weaponType', {
+const Type = db.define('type', {
     name: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -12,4 +12,4 @@ const WeaponType = db.define('weaponType', {
         allowNull: false
     }
 })
-module.exports = WeaponType
+module.exports = Type

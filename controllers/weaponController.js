@@ -3,52 +3,60 @@ const multer = require('multer')
 const path = require('path')
 
 const getAllWeapons = async (req, res) => {
-    const weapons = await Weapon.findAll()
+    const weapons = await Weapon.findAll({
+    })
     res.status(200).send(weapons)
 }
 const getWeaponById = async (req, res) => {
     const weapon = await Weapon.findByPk(req.params.id, {
     })
-    res.status(200).send(weapon)
+    weapon ? res.status(200).send(weapon) : res.status(404).json({ success: false, message: 'Weapon not found.' })
 }
 const getWeaponByName = async (req, res) => {
+    if (!req.weapon) return res.status(401).json({ success: false, message: 'Invalid weapon to access it.' })
     const weapon = await Weapon.findOne({
-        where: { name: req.params.name },
+        where: { weaponname: req.params.weaponname },
     })
-    res.status(200).send(weapon)
+    weapon ? res.status(200).send(weapon) : res.status(404).json({ success: false, message: 'Weapon not found.' })
 }
 const insertWeapon = async (req, res) => {
     await Weapon.create({
         name: req.body.name,
         description: req.body.description,
-        image: req.file.path,
+        weight: req.body.weight,
         damage: req.body.damage,
-        bonus: req.body.bonus
-    }).then(function () {
-        res.sendStatus(201)
-    }).catch(function () {
-        res.sendStatus(406)
+        bonus: req.body.bonus,
+        idType: req.body.idType,
+        image: req.file.path
     })
+        .then(function () {
+            res.sendStatus(201);
+        })
+        .catch(function () {
+            res.sendStatus(406);
+        });
 }
 const putWeaponById = async (req, res) => {
-    const weapon = await Weapon.update(req.body, { where: { id: req.params.id } })
-    res.status(200).send(weapon)
+    if (!req.weapon) return res.status(401).json({ success: false, message: 'Invalid weapon to access it.' })
+    await Weapon.update(req.body, { where: { id: req.params.id } })
+        .then((weapon) => { weapon[0] === 1 ? res.sendStatus(200) : res.status(404).json({ success: false, message: 'Weapon not found.' }) })
 }
 const deleteWeaponById = async (req, res) => {
-    await Product.destroy({ where: { id: req.params.id } })
-    res.status(200).send('Weapon was deleted!')
+    if (!req.weapon) return res.status(401).json({ success: false, message: 'Invalid weapon to access it.' })
+    await Weapon.destroy({ where: { id: req.params.id } })
+        .then((weapon) => { weapon ? res.status(200).send('Weapon was deleted!') : res.status(404).json({ success: false, message: 'Weapon not found.' }) })
 }
 
-const storage = multer.diskStorage({
+const storageWeapon = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'Images/Weapons')
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname))
+        cb(null, Date.now() + '_' + file.originalname)
     }
 })
-const upload = multer({
-    storage: storage,
+const uploadWeapon = multer({
+    storage: storageWeapon,
     limits: { fileSize: '1000000' },
     fileFilter: (req, file, cb) => {
         const fileTypes = /jpeg|jpg|png|gif/
@@ -69,5 +77,5 @@ module.exports = {
     insertWeapon,
     putWeaponById,
     deleteWeaponById,
-    upload
+    uploadWeapon
 }

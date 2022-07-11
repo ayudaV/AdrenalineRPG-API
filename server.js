@@ -32,7 +32,14 @@ app.use((req, res, next) => {
 app.use('/users', require('./routes/userRoutes.js'))
 app.use('/auth', require('./routes/authRoutes.js'))
 app.use('/characters', require('./routes/characterRoutes.js'))
+app.use('/equipments', require('./routes/equipmentRoutes.js'))
+app.use('/languages', require('./routes/languageRoutes.js'))
+app.use('/masterys', require('./routes/masteryRoutes.js'))
+app.use('/organizations', require('./routes/organizationRoutes.js'))
 app.use('/races', require('./routes/raceRoutes.js'))
+app.use('/skills', require('./routes/skillRoutes.js'))
+app.use('/types', require('./routes/typeRoutes.js'))
+app.use('/weapons', require('./routes/weaponRoutes.js'))
 
 //static Images Folder
 

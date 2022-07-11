@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db');
-const WeaponType = require('./weaponType');
+const Type = require('./type');
 
 const Weapon = db.define('weapon', {
     name: {
@@ -25,7 +25,7 @@ const Weapon = db.define('weapon', {
         allowNull: false
     }
 })
-Weapon.belongsTo(WeaponType, {
+Weapon.belongsTo(Type, {
     constraint: true,
     allowNull: false,
     foreignKey: 'idType'

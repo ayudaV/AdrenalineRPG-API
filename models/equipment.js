@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db');
+const Type = require('./type');
 
 const Equipment = db.define('equipment', {
     name: {
@@ -19,9 +20,10 @@ const Equipment = db.define('equipment', {
         type: Sequelize.DOUBLE,
         allowNull: false
     },
-    type: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
+})
+Equipment.belongsTo(Type, {
+    constraint: true,
+    allowNull: false,
+    foreignKey: 'idType'
 })
 module.exports = Equipment

@@ -1,4 +1,11 @@
 const Character = require('../models/character')
+const CharacterEquipment = require('../models/characterEquipment')
+const CharacterLanguage = require('../models/characterLanguage')
+const CharacterMastery = require('../models/characterMastery')
+const CharacterOrganization = require('../models/characterOrganization')
+const CharacterSkill = require('../models/characterSkill')
+const CharacterWeapon = require('../models/characterWeapon')
+
 const multer = require('multer')
 const path = require('path')
 
@@ -20,7 +27,6 @@ const getCharacterByName = async (req, res) => {
     character ? res.status(200).send(character) : res.status(404).json({ success: false, message: 'Character not found.' })
 }
 const insertCharacter = async (req, res) => {
-    console.log(Date(req.body.birthday));
     await Character.create({
         name: req.body.name,
         description: req.body.description,
@@ -35,6 +41,7 @@ const insertCharacter = async (req, res) => {
         speed: req.body.speed,
         health: req.body.health,
         bonusHealth: req.body.bonusHealth,
+        bonusArmor: req.body.bonusArmor,
         successes: req.body.successes,
         failures: req.body.failures,
         strength: req.body.strength,

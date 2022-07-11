@@ -13,23 +13,23 @@ const User = db.define('user', {
     },
     firstName: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
     },
     lastName: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
     },
     email: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
     },
     birthday: {
         type: Sequelize.DATE,
-        allowNull: true
+        allowNull: false
     },
     image: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
     }
 
 })
