@@ -11,6 +11,8 @@ router.get('/:id', characterController.getCharacterById)
 
 router.put('/:id', characterController.putCharacterById)
 
+router.put('/image/:id',characterController.uploadCharacter, characterController.updateImageById)
+
 router.delete('/:id', characterController.deleteCharacterById)
 
 module.exports = router
