@@ -3,23 +3,27 @@ const multer = require('multer')
 const path = require('path')
 
 const getAllEquipments = async (req, res) => {
+    if (!req.user || (req.user.role != "Admin" && req.user.role != "Master")) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
     const equipments = await Equipment.findAll({
     })
     res.status(200).send(equipments)
 }
 const getEquipmentById = async (req, res) => {
+    if (!req.user) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
     const equipment = await Equipment.findByPk(req.params.id, {
     })
     equipment ? res.status(200).send(equipment) : res.status(404).json({ success: false, message: 'Equipment not found.' })
 }
 const getEquipmentByName = async (req, res) => {
+    if (!req.user || (req.user.role != "Admin" && req.user.role != "Master")) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
     if (!req.equipment) return res.status(401).json({ success: false, message: 'Invalid equipment to access it.' })
     const equipment = await Equipment.findOne({
-        where: { equipmentname: req.params.equipmentname },
+        where: { name: req.params.name },
     })
     equipment ? res.status(200).send(equipment) : res.status(404).json({ success: false, message: 'Equipment not found.' })
 }
 const insertEquipment = async (req, res) => {
+    if (!req.user || (req.user.role != "Admin" && req.user.role != "Master")) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
     await Equipment.create({
         name: req.body.name,
         description: req.body.description,
@@ -35,12 +39,12 @@ const insertEquipment = async (req, res) => {
         });
 }
 const putEquipmentById = async (req, res) => {
-    if (!req.equipment) return res.status(401).json({ success: false, message: 'Invalid equipment to access it.' })
+    if (!req.user || (req.user.role != "Admin" && req.user.role != "Master")) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
     await Equipment.update(req.body, { where: { id: req.params.id } })
         .then((equipment) => { equipment[0] === 1 ? res.sendStatus(200) : res.status(404).json({ success: false, message: 'Equipment not found.' }) })
 }
 const deleteEquipmentById = async (req, res) => {
-    if (!req.equipment) return res.status(401).json({ success: false, message: 'Invalid equipment to access it.' })
+    if (!req.user || (req.user.role != "Admin" && req.user.role != "Master")) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
     await Equipment.destroy({ where: { id: req.params.id } })
         .then((equipment) => { equipment ? res.status(200).send('Equipment was deleted!') : res.status(404).json({ success: false, message: 'Equipment not found.' }) })
 }

@@ -11,8 +11,9 @@ const signin = async (req, res) => {
             bcrypt.compare(req.body.password, user.password, (err, result) => {
                 if (result) {
                     jwt.sign({
+                        id: user.id,
                         username: user.username,
-                        id: user.id
+                        role: user.role
                     }, process.env.JWT_SECRET, (err, token) => {
                         res.status(200).json({
                             id: user.id,

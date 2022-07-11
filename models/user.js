@@ -27,10 +27,13 @@ const User = db.define('user', {
         type: Sequelize.DATE,
         allowNull: false
     },
+    role: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     image: {
         type: Sequelize.STRING,
         allowNull: false
     }
-
 })
 module.exports = User

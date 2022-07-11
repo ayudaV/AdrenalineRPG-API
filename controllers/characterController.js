@@ -10,23 +10,27 @@ const multer = require('multer')
 const path = require('path')
 
 const getAllCharacters = async (req, res) => {
+    if (!req.user || (req.user.role != "Admin" && req.user.role != "Master")) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
     const characters = await Character.findAll({
     })
     res.status(200).send(characters)
 }
 const getCharacterById = async (req, res) => {
+    if (!req.user) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
     const character = await Character.findByPk(req.params.id, {
     })
     character ? res.status(200).send(character) : res.status(404).json({ success: false, message: 'Character not found.' })
 }
 const getCharacterByName = async (req, res) => {
-    if (!req.character) return res.status(401).json({ success: false, message: 'Invalid character to access it.' })
+    if (!req.user || (req.user.role != "Admin" && req.user.role != "Master")) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
+    if (req.user.id != 1) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
     const character = await Character.findOne({
-        where: { charactername: req.params.charactername },
+        where: { name: req.params.name },
     })
     character ? res.status(200).send(character) : res.status(404).json({ success: false, message: 'Character not found.' })
 }
 const insertCharacter = async (req, res) => {
+    if (!req.user || (req.user.role != "Admin" && req.user.id != req.body.idUser)) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
     await Character.create({
         name: req.body.name,
         description: req.body.description,
@@ -62,12 +66,17 @@ const insertCharacter = async (req, res) => {
         });
 }
 const putCharacterById = async (req, res) => {
-    if (!req.character) return res.status(401).json({ success: false, message: 'Invalid character to access it.' })
+    if (!req.user || (req.user.role != "Admin" && req.user.id != req.params.id)) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
     await Character.update(req.body, { where: { id: req.params.id } })
         .then((character) => { character[0] === 1 ? res.sendStatus(200) : res.status(404).json({ success: false, message: 'Character not found.' }) })
 }
+const updateImageById = async (req, res) => {
+    if (!req.user || (req.user.role != "Admin" && req.user.id != req.params.id)) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
+    await Character.update({image : req.file.path}, { where: { id: req.params.id } })
+        .then((character) => { character[0] === 1 ? res.sendStatus(200) : res.status(404).json({ success: false, message: 'Character not found.' }) })
+}
 const deleteCharacterById = async (req, res) => {
-    if (!req.character) return res.status(401).json({ success: false, message: 'Invalid character to access it.' })
+    if (!req.user || (req.user.role != "Admin" && req.user.id != req.params.id)) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
     await Character.destroy({ where: { id: req.params.id } })
         .then((character) => { character ? res.status(200).send('Character was deleted!') : res.status(404).json({ success: false, message: 'Character not found.' }) })
 }
@@ -102,5 +111,6 @@ module.exports = {
     insertCharacter,
     putCharacterById,
     deleteCharacterById,
-    uploadCharacter
+    uploadCharacter,
+    updateImageById
 }

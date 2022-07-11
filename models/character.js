@@ -73,6 +73,10 @@ const Character = db.define('character', {
         type: Sequelize.INTEGER,
         allowNull: false
     },
+    adrenaline: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
     strength: {
         type: Sequelize.INTEGER,
         allowNull: false
