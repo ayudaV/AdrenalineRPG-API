@@ -30,7 +30,9 @@ app.use((req, res, next) => {
 });
 
 // routers
-app.use('/', res.send("hi"))
+app.get("/", (req, res) => {
+    res.json({ message: "Welcome to adrenalineRPG API." })
+})
 app.use('/users', require('./routes/userRoutes.js'))
 app.use('/auth', require('./routes/authRoutes.js'))
 app.use('/characters', require('./routes/characterRoutes.js'))
