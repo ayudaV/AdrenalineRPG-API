@@ -5,6 +5,7 @@ const database = require('./db')
 const app = express()
 const cors = require('cors')
 const jwt = require('jsonwebtoken');
+const { json } = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 });
 
 // routers
+app.use('/', res.send("hi"))
 app.use('/users', require('./routes/userRoutes.js'))
 app.use('/auth', require('./routes/authRoutes.js'))
 app.use('/characters', require('./routes/characterRoutes.js'))
