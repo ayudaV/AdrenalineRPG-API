@@ -23,6 +23,7 @@ const getWeaponByName = async (req, res) => {
     weapon ? res.status(200).send(weapon) : res.status(404).json({ success: false, message: 'Weapon not found.' })
 }
 const insertWeapon = async (req, res) => {
+    console.log(req.body)
     if (!req.user || (req.user.role != "Admin" && req.user.role != "Master")) return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
     await Weapon.create({
         name: req.body.name,
@@ -30,7 +31,7 @@ const insertWeapon = async (req, res) => {
         damage: req.body.damage,
         bonus: req.body.bonus,
         idType: req.body.idType,
-        image: req.file.path
+        image: req.file ? req.file.path : "Images/Weapons/1657678087894_excalibur.jpg"
     })
         .then(function () {
             res.sendStatus(201);
@@ -62,6 +63,7 @@ const uploadWeapon = multer({
     storage: storageWeapon,
     limits: { fileSize: '1000000' },
     fileFilter: (req, file, cb) => {
+        console.log(file)
         const fileTypes = /jpeg|jpg|png|gif/
         const mimeType = fileTypes.test(file.mimetype)
         const extname = fileTypes.test(path.extname(file.originalname))
