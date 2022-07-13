@@ -27,7 +27,6 @@ const insertWeapon = async (req, res) => {
     await Weapon.create({
         name: req.body.name,
         description: req.body.description,
-        weight: req.body.weight,
         damage: req.body.damage,
         bonus: req.body.bonus,
         idType: req.body.idType,

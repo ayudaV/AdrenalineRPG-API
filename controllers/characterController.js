@@ -48,6 +48,7 @@ const insertCharacter = async (req, res) => {
         bonusArmor: req.body.bonusArmor,
         successes: req.body.successes,
         failures: req.body.failures,
+        adrenaline: req.body.adrenaline,
         strength: req.body.strength,
         dexterity: req.body.dexterity,
         constitution: req.body.constitution,
