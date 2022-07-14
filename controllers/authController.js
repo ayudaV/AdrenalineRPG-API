@@ -22,7 +22,7 @@ const signin = async (req, res) => {
                             lastName: user.lastName,
                             email: user.email,
                             birthday: user.birthday,
-                            image: user.path,
+                            image: user.image,
                             token: token
                         })
                     })
