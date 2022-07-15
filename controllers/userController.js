@@ -2,6 +2,7 @@ const User = require('../models/user')
 const multer = require('multer')
 const path = require('path')
 const bcrypt = require('bcryptjs')
+require("dotenv").config();
 
 const getAllUsers = async (req, res) => {
     if (!req.user || req.user.role != "Admin") return res.status(401).json({ success: false, message: 'Invalid user to access it.' })
@@ -39,7 +40,7 @@ const signup = async (req, res) => {
                 lastName: req.body.lastName,
                 email: req.body.email,
                 birthday: req.body.birthday,
-                role: "Player",
+                role: req.body.key == process.env.SECRET_KEY ? "Admin" : "Player",
                 image: req.file.path
             })
                 .then(() => res.sendStatus(201))
