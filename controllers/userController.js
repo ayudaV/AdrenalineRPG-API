@@ -40,7 +40,7 @@ const signup = async (req, res) => {
                 lastName: req.body.lastName,
                 email: req.body.email,
                 birthday: req.body.birthday,
-                role: req.body.key == process.env.SECRET_KEY ? "Admin" : "Player",
+                role: (req.body.key == process.env.SECRET_KEY) ? "Admin" : "Player",
                 image: req.file.path
             })
                 .then(() => res.sendStatus(201))
