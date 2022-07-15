@@ -3,6 +3,12 @@ const db = require('../db');
 const Type = require('./type');
 
 const Weapon = db.define('weapon', {
+    id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
+        primaryKey: true
+    },
     name: {
         type: Sequelize.STRING,
         allowNull: false,

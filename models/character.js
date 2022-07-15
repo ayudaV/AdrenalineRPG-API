@@ -4,6 +4,12 @@ const Race = require('./race');
 const User = require('./user');
 
 const Character = db.define('character', {
+    id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
+        primaryKey: true
+    },
     name: {
         type: Sequelize.STRING,
         allowNull: false,
