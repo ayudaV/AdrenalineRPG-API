@@ -29,7 +29,7 @@ const insertEquipment = async (req, res) => {
         description: req.body.description,
         weight: req.body.weight,
         idType: req.body.idType,
-        image: req.file.path
+        image: req.file ? req.file.path : "Images/Equipments/equipment.jpg"
     })
         .then(function () {
             res.sendStatus(201);

@@ -41,7 +41,7 @@ const signup = async (req, res) => {
                 email: req.body.email,
                 birthday: req.body.birthday,
                 role: (req.body.key == process.env.SECRET_KEY) ? "Admin" : "Player",
-                image: req.file.path
+                image: req.file ? req.file.path : "Images/Users/user.png"
             })
                 .then(() => res.sendStatus(201))
                 .catch(() => res.sendStatus(406))

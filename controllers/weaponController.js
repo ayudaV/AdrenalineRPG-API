@@ -31,7 +31,7 @@ const insertWeapon = async (req, res) => {
         damage: req.body.damage,
         bonus: req.body.bonus,
         idType: req.body.idType,
-        image: req.file ? req.file.path : "Images/Weapons/1657678087894_excalibur.jpg"
+        image: req.file ? req.file.path : "Images/Weapons/weapon.png"
     })
         .then(function () {
             res.sendStatus(201);

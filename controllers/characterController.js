@@ -57,7 +57,7 @@ const insertCharacter = async (req, res) => {
         charisma: req.body.charisma,
         idRace: req.body.idRace,
         idUser: req.body.idUser,
-        image: req.file.path
+        image: req.file ? req.file.path : "Images/Characters/character.png"
     })
         .then(function () {
             res.sendStatus(201);
